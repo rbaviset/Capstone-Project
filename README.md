@@ -1,7 +1,8 @@
 # Capstone-Project : AI driven Sourcing Strategy?
 
-Repository for Capstone Project : 
-Assignment notebook : 
+* Repository for Capstone Project:
+  
+* Assignment notebook: 
 
 # 1. Business Understanding
  
