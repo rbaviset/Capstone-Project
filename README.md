@@ -1,7 +1,7 @@
-# Capstone-Project
-Repository for Capstone Project: AI driven Sourcing Strategy?
+# Capstone-Project : AI driven Sourcing Strategy?
 
-Assignment notebook: https://github.com/rbaviset/Practical-Applications-2/blob/main/Practical%20Application%20LGBM.ipynb
+Repository for Capstone Project : 
+Assignment notebook : 
 
 # 1. Business Understanding
  
