@@ -1,6 +1,6 @@
 # Capstone-Project : AI driven Sourcing Strategy?
 
-* Repository for Capstone Project: https://github.com/rbaviset/Capstone-Project
+Repository for Capstone Project: https://github.com/rbaviset/Capstone-Project
   
 # 1. Business Understanding
 The increasing complexity and volatility of global supply chains subject the sourcing function to constant, high-impact risks, including sudden supplier financial failures, geopolitical trade disruptions, and chronic supply shortages.
