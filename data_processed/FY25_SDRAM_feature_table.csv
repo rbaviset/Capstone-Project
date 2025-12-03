@@ -1,1 +1,4 @@
-
+supplier,cost_savings,PPV,QP,QR,lead_time_attainment,carbon_emission_intensity,renewable_energy_usage,plastic_recycle,human_rights_compliance_score,node_parity,DDR_gen_support,geo_risk,tariff_risk,chip_shortage_impact,revenue,cogs,gross_margin_pct,cash_flow,debt_equity_ratio,scale_unit,value_unit,fiscal_year
+Micron,15%,-500,95,90,95%,12.0,38%,91%,97,1,0.8,0.316,0.086,0.08,37378000.0,22505000.0,39.800000000000004,17525000.0,0.269,millions,Thousands USD,2025
+Samsung,7%,-500,85,80,90%,14.5,32%,88%,95,1,0.85,0.265,0.081,0.08,79140503000.0,51009931000.0,35.54,16580866000.0,0.27,millions of Korean won,Thousands USD,2025
+SK Hynix,10%,-500,95,90,95%,13.5,35%,89%,96,1,0.95,0.305,0.09,0.08,18110370.37037037,7718518.518518519,57.38476837580261,10642962.962962963,0.29,KRW Billion,Thousands USD,2025
