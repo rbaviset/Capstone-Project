@@ -124,5 +124,21 @@ Train a supervised regression model to learn optimal supplier allocation percent
 
 # 6. Deployment
 
+## FY25 Supplier Feature Extraction Pipeline
+This pipeline prepares FY25 supplier financial and operational features for inference using the trained PSL (Model-1B) and Spend Allocation (Model-2B) models. It is part of the Deployment phase and separate from the historical data preparation used for model training.
+
+| **Step**   | **Task**                                | **Description**                                                                                    | **Input → Output**                                                                                                        |
+| ---------- | --------------------------------------- | -------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
+| **1** | **Load Raw Financial Statements (PDF)** | Extract FY25 P&L data using Gemini LLM + pdfplumber.                                               | `Samsung 2025_con_quarter01_all.pdf`<br>`Micron Technology Inc_Fiscal2025.pdf`<br>`SK Hynix 3Q2025.pdf` → Structured JSON |
+| **2** | **LLM Financial Parsing**               | Use Pydantic schema to extract revenue, COGS, gross margin %, cash flow, debt/equity, scale units. | Raw text → Parsed financial rows                                                                                          |
+| **3** | **Supplier Name Normalization**         | Fuzzy-map LLM supplier names to official names (`Samsung`, `Micron`, `SK Hynix`).                  | Raw supplier names → Normalized supplier                                                                                  |
+| **4** | **Scale & Currency Standardization**    | Convert KRW billions / millions into **Thousands USD** using mapping rules.                        | Revenue, COGS, CashFlow → `Thousands USD`                                                                                 |
+| **5** | **Load FY25 Non-Financial Data**        | Import operational, ESG, and risk indicators from CSV.                                             | `FY25_ServerDRAM_NonFinancial.csv`                                                                                        |
+| **6** | **Supplier Name Cleanup (CSV)**         | Normalize CSV supplier names with fuzzy matching.                                                  | Raw CSV names → Clean names                                                                                               |
+| **7** | **Merge Financial + Non-Financial**     | Join datasets on supplier, ensuring a **single fiscal_year column**.                               | PDFs + CSV → `FY25_SDRAM_feature_table.csv`                                                                               |
+| **8** | **Export FY25 Feature Table**           | Final dataset used as input to PSL & Allocation prediction models.                                 | Output: `FY25_SDRAM_feature_table.csv`                                                                                    |
+
+## FY25 Sourcing Strategy Inference Pipeline
+The trained PSL classifier (Model-1B) and spend allocation regressor (Model-2B) from the historical modeling stage are applied to the FY25 dataset to generate the final PSL category and allocation recommendations for category managers.
 
 
