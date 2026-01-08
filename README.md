@@ -141,4 +141,11 @@ This pipeline prepares FY25 supplier financial and operational features for infe
 ## FY25 Sourcing Strategy Inference Pipeline
 The trained PSL classifier (Model-1B) and spend allocation regressor (Model-2B) from the historical modeling stage are applied to the FY25 dataset to generate the final PSL category and allocation recommendations for category managers.
 
+# 7. Future Scope & Next Steps
+
+1. **Real-Time Intelligence Ecosystem** Transition from static document analysis to live ingestion of market signals. Integrate dynamic APIs (Financial health, Geopolitical risk feeds, and ESG disclosures) to predict disruptions before they impact the supply chain.
+2. **Autonomous Reasoning Engine (LangGraph)** Upgrade to a Multi-Agent Architecture where specialized AI agents (e.g., Financial Analyst, Technical Sourcing Manager) collaborate to solve complex queries. This improves reasoning depth and ensures policy compliance with minimal manual oversight.
+3. **Strategic Category Expansion** Leverage the existing DRAM framework to rapidly scale coverage into critical silicon categories, specifically GPUs and ASICs.
+4. **Defensible Sourcing Intelligence** Deploy Advanced RAG to synthesize insights and generate supplier white papers for Strategic Decision Support. Enable stakeholders to generate data-backed narratives that justify multi-million dollar spend allocations in natural language.
+
 
