@@ -74,12 +74,11 @@ This model is a multiclass classification model predicting PSL categories: 1)Pre
 
 | Component           | Details                                                                                                                               |
 | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
-| **Algorithm**       | XGBoost Classifier (multi-class)                                                                                                      |
+| **Algorithm**       | XGBoost Classifier (multi-class)                       |
 | **Input Features**  | Financial(Gross Margin%, Cash Flow, Debt Equity Ratio), Risk(Geo, Tariff, Chip Shortage), Technology (DDR Gen, Node Parity) |
-
-| **Target Variable** | `PSL_code` (from PSL_status produced by Model-1A unsupervised logic)                                                                             |
-| **# of Classes**    | 3 (Preferred, Developing, Limited)                                                                                                    |
-| **Data Source**     | `historical_features_with_allocation.csv`                                                                                             |
+| **Target Variable** | `PSL_code` (from PSL_status produced by Model-1A unsupervised logic)|
+| **# of Classes**    | 3 (Preferred, Developing, Limited)                     |
+| **Data Source**     | `historical_features_with_allocation.csv`              |
 
 ## 4.2 Supervised Spend Allocation Prediction (Model-2B)
 This model is a regression model predicting continuous values: Supplier allocation percentage(%). Train the supervised regression model to learn optimal supplier allocation percentages based on historical Performance, ESG, and PSL classification.
@@ -104,9 +103,15 @@ This model is a regression model predicting continuous values: Supplier allocati
 | **Confusion Matrix**        | All samples correctly classified       |
 
 ### Evaluation Interpretation
-**1.** The perfect score is expected because the dataset is small (6×3 = 18 samples). Classes are strongly separable due to engineered target clusters from Model-1A. PSL categories follow consistent financial + operational patterns.
+**1.** The model was trained on 10 years of historical supplier data across three strategic suppliers (30 samples). The dataset exhibits strong structural separability because PSL categories were derived using unsupervised clustering (Model-1A) based on consistent financial, operational, and risk patterns.
 
-**2.** In summary, the model generalizes well because PSL categories are stable over time and strongly tied to distinguishable features (Samsung = strong cash flow + GM%, Micron & SK Hynix mid-range). PSL predictions for future years are expected to remain consistent since feature distributions follow the same ranges.
+**2.** Supplier behavior is highly stable over time. Samsung consistently exhibits strong cash flow, margins, technology leadership, and lower risk exposure. Micron and SK Hynix follow mid-range financial and operational profiles.
+
+**3.** The model therefore learns clean, deterministic decision boundaries, which results in perfect classification on the historical dataset.
+
+**4.** This result is expected and desirable in a strategic sourcing context where supplier tiers are stable, well-defined, and intentionally engineered.
+
+**5.** The model is intended for forward-looking inference (FY25+), not random sampling prediction, and therefore serves as a policy consistency engine for future sourcing decisions.
 
 ## 5.2 Supervised Spend Allocation Prediction (Model-2B)
 
@@ -121,7 +126,17 @@ This model is a regression model predicting continuous values: Supplier allocati
 ### Evaluation Interpretation
 **1.** The model explains ~85% of the variance in optimal allocation. Errors are small: < 2% deviation from target allocation. Final allocations always sum to 100% due to normalization logic.
 
-**2.** Insummary, The model correctly learned allocation patterns across suppliers and fiscal years. Allocation behavior strongly follows PSL categories, operational excellence, and risk stability. Due to the consistent patterns in historical data (Samsung = Preferred = higher allocation), the model reproduces allocations consistently and accurately.
+**2.** The supervised model successfully learns and reproduces the strategic allocation logic defined by unsupervised Model-2A, driven by:
+
+**a)** PSL tier (Preferred / Developing / Limited)
+
+**b)** Cost efficiency (cost savings, PPV)
+
+**c)** Quality & delivery performance (QP, QR, lead time)
+
+**d)** ESG maturity (carbon, renewables, compliance)
+
+**3.** Insummary, The model correctly learned allocation patterns across suppliers and fiscal years. Allocation behavior strongly follows PSL categories, operational excellence, and ESG maturity. Due to the consistent patterns in historical data (Samsung = Preferred = higher allocation), the model reproduces allocations consistently and accurately. Allocation outputs are normalized to ensure Total spend split = 100%
 
 # 6. Deployment
 
