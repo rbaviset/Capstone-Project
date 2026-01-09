@@ -1,4 +1,4 @@
-# Capstone-Project : AI driven Sourcing Strategy?
+# Capstone-Project : AI driven Sourcing Strategy
 
 Repository for Capstone Project: https://github.com/rbaviset/Capstone-Project
   
@@ -69,18 +69,18 @@ These transformations were implemented during final EDA and will be reused in mo
 
 
 # 4. Modeling
-## 4.1 Supervised Supplier Categorization (PSL Prediction)
+## 4.1 Supervised Supplier Categorization (Model-1B)
 Train a supervised model that learns historical supplier classification (Preferred / Developing / Limited) from engineered financial, operational, risk, ESG, and roadmap features.
 
 | Component           | Details                                                                                                                               |
 | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
 | **Algorithm**       | XGBoost Classifier (multi-class)                                                                                                      |
 | **Input Features**  | Financial (GM%, Cash Flow, D/E), Operational (QP/QR, Lead Time), Risk (Geo, Tariff, Chip Shortage), Technology (DDR Gen, Node Parity) |
-| **Target Variable** | `PSL_code` (encoded from PSL_status produced by Model-1A)                                                                             |
+| **Target Variable** | `PSL_code` (encoded from PSL_status produced by Model-1A unsupervised logic)                                                                             |
 | **# of Classes**    | 3 (Preferred, Developing, Limited)                                                                                                    |
 | **Data Source**     | `historical_features_with_allocation.csv`                                                                                             |
 
-## 4.2 Supervised Spend Allocation Prediction
+## 4.2 Supervised Spend Allocation Prediction (Model-2B)
 Train a supervised regression model to learn optimal supplier allocation percentages based on historical performance, risks, ESG, and PSL classification.
 
 | Component           | Details                                                 |
@@ -93,7 +93,7 @@ Train a supervised regression model to learn optimal supplier allocation percent
 
 
 # 5. Evaluation
-## 5.1 Supervised Supplier Categorization (PSL Prediction)
+## 5.1 Supervised Supplier Categorization (Model-1B)
 
 ### Performance Summary
 | Metric                      | Result                                 |
@@ -107,7 +107,7 @@ Train a supervised regression model to learn optimal supplier allocation percent
 
 **2.** In summary, the model generalizes well because PSL categories are stable over time and strongly tied to distinguishable features (Samsung = strong cash flow + GM%, Micron & SK Hynix mid-range). PSL predictions for future years are expected to remain consistent since feature distributions follow the same ranges.
 
-## 5.2 Supervised Spend Allocation Prediction
+## 5.2 Supervised Spend Allocation Prediction (Model-2B)
 
 ### Performance Summary
 | Metric       | Result                                         |
@@ -143,9 +143,9 @@ The trained PSL classifier (Model-1B) and spend allocation regressor (Model-2B) 
 
 # 7. Future Scope & Next Steps
 
-1. **Real-Time Intelligence Ecosystem** Transition from static document analysis to live ingestion of market signals. Integrate dynamic APIs (Financial health, Geopolitical risk feeds, and ESG disclosures) to predict disruptions before they impact the supply chain.
-2. **Autonomous Reasoning Engine (LangGraph)** Upgrade to a Multi-Agent Architecture where specialized AI agents (e.g., Financial Analyst, Technical Sourcing Manager) collaborate to solve complex queries. This improves reasoning depth and ensures policy compliance with minimal manual oversight.
-3. **Strategic Category Expansion** Leverage the existing DRAM framework to rapidly scale coverage into critical silicon categories, specifically GPUs and ASICs.
-4. **Defensible Sourcing Intelligence** Deploy Advanced RAG to synthesize insights and generate supplier white papers for Strategic Decision Support. Enable stakeholders to generate data-backed narratives that justify multi-million dollar spend allocations in natural language.
+1. **Real-Time Intelligence Ecosystem :** Transition from static document analysis to live ingestion of market signals. Integrate dynamic APIs (Financial health, Geopolitical risk feeds, and ESG disclosures) to predict disruptions before they impact the supply chain.
+2. **Autonomous Reasoning Engine (LangGraph) :** Upgrade to a Multi-Agent Architecture where specialized AI agents (e.g., Financial Analyst, Technical Sourcing Manager) collaborate to solve complex queries. This improves reasoning depth and ensures policy compliance with minimal manual oversight.
+3. **Strategic Category Expansion :** Leverage the existing DRAM framework to rapidly scale coverage into critical silicon categories, specifically GPUs and ASICs.
+4. **Defensible Sourcing Intelligence :** Deploy Advanced RAG to synthesize insights and generate supplier white papers for Strategic Decision Support. Enable stakeholders to generate data-backed narratives that justify multi-million dollar spend allocations in natural language.
 
 
