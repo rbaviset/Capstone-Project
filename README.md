@@ -70,23 +70,24 @@ These transformations were implemented during final EDA and will be reused in mo
 
 # 4. Modeling
 ## 4.1 Supervised Supplier Categorization (Model-1B)
-Train a supervised model that learns historical supplier classification (Preferred / Developing / Limited) from engineered financial, operational, risk, ESG, and roadmap features.
+This model is a multiclass classification model predicting PSL categories: 1)Preferred 2)Developing 3)Limited. Train the supervised classification model that learns historical supplier classification from engineered Financial, Risk, and Technology roadmap features.
 
 | Component           | Details                                                                                                                               |
 | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
 | **Algorithm**       | XGBoost Classifier (multi-class)                                                                                                      |
-| **Input Features**  | Financial (GM%, Cash Flow, D/E), Operational (QP/QR, Lead Time), Risk (Geo, Tariff, Chip Shortage), Technology (DDR Gen, Node Parity) |
-| **Target Variable** | `PSL_code` (encoded from PSL_status produced by Model-1A unsupervised logic)                                                                             |
+| **Input Features**  | Financial(Gross Margin%,Cash Flow,Debt Equity Ratio), Risk(Geo, Tariff, Chip Shortage), Technology (DDR Gen, Node Parity) |
+
+| **Target Variable** | `PSL_code` (from PSL_status produced by Model-1A unsupervised logic)                                                                             |
 | **# of Classes**    | 3 (Preferred, Developing, Limited)                                                                                                    |
 | **Data Source**     | `historical_features_with_allocation.csv`                                                                                             |
 
 ## 4.2 Supervised Spend Allocation Prediction (Model-2B)
-Train a supervised regression model to learn optimal supplier allocation percentages based on historical performance, risks, ESG, and PSL classification.
+This model is a regression model predicting continuous values: Supplier allocation percentage(%). Train the supervised regression model to learn optimal supplier allocation percentages based on historical Performance, ESG, and PSL classification.
 
 | Component           | Details                                                 |
 | ------------------- | ------------------------------------------------------- |
 | **Algorithm**       | XGBoost Regressor                                       |
-| **Input Features**  | PSL_predicted + all operational + ESG + risk features   |
+| **Input Features**  | PSL_predicted, Operational(Cost Savings, PPV, QP, QR, Lead Time Attainment), ESG(Carbon Emission Intensity, Renewable Energy Usage, Plastic Recycle, Human Rights Compliance)   |
 | **Target Variable** | `allocation_percent` (from Model-2A unsupervised logic) |
 | **Normalization**   | Final predictions normalized per fiscal year → 100%     |
 | **Data Source**     | `supplier_categorization_predictions.csv`               |
