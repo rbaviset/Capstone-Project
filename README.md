@@ -75,7 +75,7 @@ This model is a multiclass classification model predicting PSL categories: 1)Pre
 | Component           | Details                                                                                                                               |
 | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
 | **Algorithm**       | XGBoost Classifier (multi-class)                                                                                                      |
-| **Input Features**  | Financial(Gross Margin%,Cash Flow,Debt Equity Ratio), Risk(Geo, Tariff, Chip Shortage), Technology (DDR Gen, Node Parity) |
+| **Input Features**  | Financial(Gross Margin%, Cash Flow, Debt Equity Ratio), Risk(Geo, Tariff, Chip Shortage), Technology (DDR Gen, Node Parity) |
 
 | **Target Variable** | `PSL_code` (from PSL_status produced by Model-1A unsupervised logic)                                                                             |
 | **# of Classes**    | 3 (Preferred, Developing, Limited)                                                                                                    |
