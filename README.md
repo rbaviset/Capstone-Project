@@ -124,6 +124,22 @@ This project employs a multi-stage machine learning pipeline that transitions fr
 
 **2.** By implementing a strict pipeline where scaling and hyperparameter tuning were fit solely on training data, we have verified that the perfect scores are not due to data contamination, but rather strong feature signals. Using GridSearchCV, we identified a shallow max_depth (3) and a conservative learning_rate (0.03). This ensures the model ignores year-over-year "noise" and focuses on the core financial and operational signatures of each supplier tier.
 
+**3.** Per project feedback, the two approaches Unsupervised vs. Supervisedare compared to validate our categorization engine:
+
+| Feature                     | Model-1A (K-Means)                     |  Model-1B (XGBoost)               |
+| --------------------------- | -------------------------------------- | --------------------------------- |
+| **Learning Type**           | Unsupervised                           |  Supervised                       |
+| **Input Requirement**       | Only features                          |  Features + K-Means Labels        |
+| **Primary Goal**            | Discover natural tiers in history      |  Predict tiers for future years   |
+| **Metric for Success**      | Stability                              |  Accuracy (100%) / F1-Score       |
+| **Business Value**          | Eliminates bias in labeling            |  Automates policy consistency     |
+
+* **Validation:** The XGBoost model achieved 100% accuracy in predicting the K-Means clusters. This proves that the clusters found in Model-1A are not "random" but are based on highly consistent and learnable feature patterns.
+
+* **Generalization:** While K-Means is retrospective (it looks at what happened), XGBoost is prospective. By comparing the two, we confirmed that the "Preferred" criteria found in the data is robust enough to be used as a predictive rule for the 2024 and 2025 fiscal years.
+
+* **Stability:** The transition from Model-1A to Model-1B ensures that if a new supplier enters the dataset in 2026, the XGBoost model can categorize them instantly without needing to re-run the entire clustering algorithm.
+
 ## 5.2 Supervised Spend Allocation Prediction (Model-2B)
 
 ### Performance Summary
