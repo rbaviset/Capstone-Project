@@ -96,47 +96,42 @@ This model is a regression model predicting continuous values: Supplier allocati
 ## 5.1 Supervised Supplier Categorization (Model-1B)
 
 ### Performance Summary
-| Metric                      | Result                                 |
-| --------------------------- | -------------------------------------- |
-| **Accuracy**                | **100%**                               |
-| **Precision / Recall / F1** | **1.00 / 1.00 / 1.00** for all classes |
-| **Confusion Matrix**        | All samples correctly classified       |
+| Metric                      | Result                                                                                                     |
+| --------------------------- | -----------------------------------------------------------------------------------------------------------|
+| **Accuracy**                | **100%**                                                                                                   |
+| **Precision / Recall / F1** | **1.00 / 1.00 / 1.00** for all classes                                                                     |
+| **Confusion Matrix**        | All samples correctly classified                                                                           |
+| **Optimization**            | GridSearchCV. 3,645 fits for parameter tuning, Best Parameters: max_depth:3, LR:0.03,Optimized via 5-FoldCV|
 
 ### Evaluation Interpretation
-**1.** The model was trained on 10 years of historical supplier data across three strategic suppliers (30 samples). The dataset exhibits strong structural separability because PSL categories were derived using unsupervised clustering (Model-1A) based on consistent financial, operational, and risk patterns.
+**1.** The model was trained on 10 years of historical supplier data across three strategic suppliers (30 samples). The dataset exhibits strong structural separability because PSL categories were derived using unsupervised clustering (Model-1A) based on consistent financial, operational, and risk patterns. Supplier behavior is highly stable over time. Samsung consistently exhibits strong cash flow, margins, technology leadership, and lower risk exposure. Micron and SK Hynix follow mid-range financial and operational profiles.
 
-**2.** Supplier behavior is highly stable over time. Samsung consistently exhibits strong cash flow, margins, technology leadership, and lower risk exposure. Micron and SK Hynix follow mid-range financial and operational profiles.
-
-**3.** The model therefore learns clean, deterministic decision boundaries, which results in perfect classification on the historical dataset.
-
-**4.** This result is expected and desirable in a strategic sourcing context where supplier tiers are stable, well-defined, and intentionally engineered.
-
-**5.** The model is intended for forward-looking inference (FY25+), not random sampling prediction, and therefore serves as a policy consistency engine for future sourcing decisions.
+**2.** By implementing a strict pipeline where scaling and hyperparameter tuning were fit solely on training data, we have verified that the perfect scores are not due to data contamination, but rather strong feature signals. Using GridSearchCV, we identified a shallow max_depth (3) and a conservative learning_rate (0.03). This ensures the model ignores year-over-year "noise" and focuses on the core financial and operational signatures of each supplier tier.
 
 ## 5.2 Supervised Spend Allocation Prediction (Model-2B)
 
 ### Performance Summary
-| Metric       | Result                                         |
-| ------------ | ---------------------------------------------- |
-| **R² Score** | **0.848**                                      |
-| **MAE**      | **0.763**                                      |
-| **RMSE**     | **1.808**                                      |
-| **Bias**     | None observed (predictions centered correctly) |
+| Metric               | Result                                            |
+| -------------------- | ------------------------------------------------- |
+| **R² Score**         | **0.863**                                         |
+| **MAE**              | **0.855**                                         |
+| **RMSE**             | **1.717**                                         |
+| **Optimization**     | GridSearchCV.3,645 fits for hyperparameter tuning |
 
 ### Evaluation Interpretation
-**1.** The model explains ~85% of the variance in optimal allocation. Errors are small: < 2% deviation from target allocation. Final allocations always sum to 100% due to normalization logic.
+**1.** The model explains 86.3% of the variance in optimal spend allocation. By implementing GridSearchCV (best max_depth: 5, reg_lambda: 2.0), we improved the $R^2$ from the previous baseline while ensuring the model remains robust against overfitting.
 
-**2.** The supervised model successfully learns and reproduces the strategic allocation logic defined by unsupervised Model-2A, driven by:
+**2.** The MAE of 0.855% indicates that predictions typically deviate by less than 1% from the target. Given that final business allocations are rounded to 5% increments, the model provides high-fidelity signals that consistently map to correct "business buckets."
 
-**a)** PSL tier (Preferred / Developing / Limited)
+**3.** The XGBoost Regressor successfully learned the complex relationships between:
 
-**b)** Cost efficiency (cost savings, PPV)
+PSL Tier: (Preferred = higher baseline allocation).
 
-**c)** Quality & delivery performance (QP, QR, lead time)
+Operational Performance: Cost efficiency (PPV), Quality (QP), and Delivery (Lead time).
 
-**d)** ESG maturity (carbon, renewables, compliance)
+Sustainability: ESG maturity blocks (Carbon, Renewables).
 
-**3.** Insummary, The model correctly learned allocation patterns across suppliers and fiscal years. Allocation behavior strongly follows PSL categories, operational excellence, and ESG maturity. Due to the consistent patterns in historical data (Samsung = Preferred = higher allocation), the model reproduces allocations consistently and accurately. Allocation outputs are normalized to ensure Total spend split = 100%
+**4.** All outputs are passed through a normalization layer to ensure the Total Spend Split always equals 100%. This makes the model "deployment-ready" for FY25+ strategic sourcing planning.
 
 # 6. Deployment
 
